@@ -7,8 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "DrawingView.h"
 
 @interface ViewController ()
+
+@property (strong, nonatomic) IBOutlet DrawingView *drawingView;
 
 @end
 
@@ -16,7 +19,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    self.drawingView.layer.borderWidth = 3;
+    self.drawingView = [[DrawingView alloc] init];
+    
+    
 }
 
 
