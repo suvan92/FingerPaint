@@ -16,7 +16,7 @@
     if (self) {
         self.listOfPoints = [[NSMutableArray alloc] init];
         self.lineWidth = 2;
-        self.color = [UIColor blackColor];
+        self.color = color;
     }
     return self;
 }
