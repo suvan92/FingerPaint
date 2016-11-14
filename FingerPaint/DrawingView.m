@@ -44,19 +44,10 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     
-    NSMutableArray *listOfPaths = [[NSMutableArray alloc] init];
-    
     for (int i = 0; i < self.listOfLines.count; i++) {
+        
         UIBezierPath *path = [UIBezierPath bezierPath];
-        [listOfPaths addObject:path];
-    }
-    
-    for (int i = 0; i < listOfPaths.count; i++) {
-        
-        UIBezierPath *currentPath = listOfPaths[i];
-        
         Line *currentLine = self.listOfLines[i];
-        
         [currentLine.color setStroke];
         
         for (int i = 0; i < currentLine.listOfPoints.count; i++) {
@@ -64,14 +55,12 @@
             CGPoint currentPoint = [currentLine.listOfPoints[i] CGPointValue];
             
             if (i == 0) {
-                [currentPath moveToPoint:currentPoint];
+                [path moveToPoint:currentPoint];
             } else {
-                [currentPath addLineToPoint:currentPoint];
+                [path addLineToPoint:currentPoint];
             }
-            
         }
-        
-        [currentPath stroke];
+        [path stroke];
     }
 }
 
