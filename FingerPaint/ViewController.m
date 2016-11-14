@@ -92,8 +92,6 @@
         self.blueIndicator.backgroundColor = [UIColor whiteColor];
         self.redIndicator.backgroundColor = [UIColor whiteColor];
     }
-    
-    
 }
 
 

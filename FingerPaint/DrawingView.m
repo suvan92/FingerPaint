@@ -33,6 +33,7 @@
         self.listOfLines = [[NSMutableArray alloc] init];
         
         self.currentColour = [UIColor blackColor];
+        
     }
     return self;
     
@@ -43,29 +44,37 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     
-    UIBezierPath *path = [UIBezierPath bezierPath];
+    NSMutableArray *listOfPaths = [[NSMutableArray alloc] init];
     
-    for (Line *singleLine in self.listOfLines) {
+    for (int i = 0; i < self.listOfLines.count; i++) {
+        UIBezierPath *path = [UIBezierPath bezierPath];
+        [listOfPaths addObject:path];
+    }
+    
+//    UIBezierPath *path = [UIBezierPath bezierPath];
+    
+    for (int i = 0; i < listOfPaths.count; i++) {
         
-        [singleLine.color setStroke];
-        [path setLineWidth:singleLine.lineWidth];
+        UIBezierPath *currentPath = listOfPaths[i];
         
+        Line *currentLine = self.listOfLines[i];
         
-        for (int i = 0; i < singleLine.listOfPoints.count; i++) {
+        [currentLine.color setStroke];
+        
+        for (int i = 0; i < currentLine.listOfPoints.count; i++) {
             
-            CGPoint currentPoint = [singleLine.listOfPoints[i] CGPointValue];
+            CGPoint currentPoint = [currentLine.listOfPoints[i] CGPointValue];
             
             if (i == 0) {
-                [path moveToPoint:currentPoint];
+                [currentPath moveToPoint:currentPoint];
             } else {
-                [path addLineToPoint:currentPoint];
+                [currentPath addLineToPoint:currentPoint];
             }
             
         }
         
+        [currentPath stroke];
     }
-    
-    [path stroke];
 }
 
 -(void)drawHandler:(UIPanGestureRecognizer *)panGR {
@@ -76,17 +85,13 @@
         [self.listOfLines addObject:newLine];
 //        NSLog(@"New line created: %@", NSStringFromCGPoint([panGR locationInView:self]));
 //        NSLog(@"%ld", (long) self.listOfLines.count);
-        
     } else if (panGR.state == UIGestureRecognizerStateChanged) {
         Line *currentLine = [self.listOfLines lastObject];
-        
         [currentLine.listOfPoints addObject:[NSValue valueWithCGPoint:[panGR locationInView:self]]];
 //        NSLog(@"Moved points: %@", NSStringFromCGPoint([panGR locationInView:self]));
 //        NSLog(@"%ld", (long) currentLine.listOfPoints.count);
     }
-    
     [self setNeedsDisplay];
-    
 }
 
 
