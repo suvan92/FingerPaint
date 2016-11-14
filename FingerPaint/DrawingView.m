@@ -51,8 +51,6 @@
         [listOfPaths addObject:path];
     }
     
-//    UIBezierPath *path = [UIBezierPath bezierPath];
-    
     for (int i = 0; i < listOfPaths.count; i++) {
         
         UIBezierPath *currentPath = listOfPaths[i];
